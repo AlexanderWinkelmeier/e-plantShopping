@@ -313,7 +313,46 @@ function ProductList(props) {
           {/* Simple button approach for better compatibility */}
           <button
             type="button"
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              // Mehrere Strategien, um zur Startseite zurückzukehren
+
+              // Strategie 1: Den direkten Callback verwenden
+              if (props.onHomeClick) {
+                props.onHomeClick();
+              }
+
+              // Strategie 2: Direktes DOM-Scripting als Backup
+              setTimeout(() => {
+                // Zur Basis-URL navigieren ohne Neuladen
+                const baseUrl =
+                  window.location.protocol +
+                  '//' +
+                  window.location.host +
+                  (window.location.pathname.includes('/e-plantShopping/')
+                    ? '/e-plantShopping/'
+                    : '/');
+                window.history.pushState({}, '', baseUrl);
+
+                // App-Zustand direkt manipulieren
+                document
+                  .querySelectorAll('.product-list-container')
+                  .forEach((el) => {
+                    el.style.display = 'none';
+                  });
+
+                // Landing Page anzeigen
+                const landingPage = document.querySelector('.landing-page');
+                if (landingPage) {
+                  landingPage.style.display = 'block';
+                  landingPage.classList.remove('fade-out');
+                }
+
+                // Fallback, wenn alles andere fehlschlägt
+                if (!landingPage) {
+                  window.location.href = baseUrl;
+                }
+              }, 10); // Kurze Verzögerung für React-State
+            }}
             style={{
               background: 'transparent',
               border: 'none',
