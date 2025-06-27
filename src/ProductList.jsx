@@ -312,7 +312,7 @@ function ProductList(props) {
         <div className="tag">
           <div
             style={{ cursor: 'pointer' }}
-            onClick={props.toLanding}
+            onClick={props.onHomeClick}
             className="luxury"
           >
             <img
@@ -342,17 +342,19 @@ function ProductList(props) {
                     position: 'absolute',
                     top: '18px',
                     left: '16px',
-                    fontSize: '1.2rem',
+                    fontSize: '1.6rem',
+                    fontWeight: 'bold',
                     cursor: 'pointer',
                     background: '#4CAF50',
                     borderRadius: '50%',
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     color: 'white',
                     display: totalItems() > 0 ? 'flex' : 'none',
                     alignItems: 'center',
                     justifyContent: 'center',
                     textAlign: 'center',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                   }}
                 >
                   {totalItems()}
