@@ -5,27 +5,23 @@ import AboutUs from './AboutUs';
 
 function App() {
   const [showProductList, setShowProductList] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleGetStartedClick = () => {
-    setIsTransitioning(true);
     setShowProductList(true);
   };
 
   const handleHomeClick = () => {
     console.log('handleHomeClick wurde aufgerufen');
-    setIsTransitioning(true);
-    requestAnimationFrame(() => {
-      setShowProductList(false);
-      window.scrollTo(0, 0);
-      setTimeout(() => setIsTransitioning(false), 300);
-    });
+    // Direktes Setzen des States
+    setShowProductList(false);
+    // Scrollen nach oben
+    window.scrollTo(0, 0);
   };
 
   return (
     <div className="app-container">
-      {(!showProductList || isTransitioning) && (
-        <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
+      {!showProductList && (
+        <div className="landing-page">
           <div className="background-image"></div>
           <div className="content">
             <div className="landing_content">
@@ -46,13 +42,8 @@ function App() {
           </div>
         </div>
       )}
-      {(showProductList || isTransitioning) && (
-        <div
-          className={`product-list-container ${
-            showProductList ? 'visible' : ''
-          }`}
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
-        >
+      {showProductList && (
+        <div className="product-list-container visible">
           <ProductList onHomeClick={handleHomeClick} />
         </div>
       )}

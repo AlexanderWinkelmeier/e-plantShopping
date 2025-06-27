@@ -310,34 +310,34 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          <div
-            className="luxury"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              if (typeof props.onHomeClick === 'function') {
-                props.onHomeClick();
-              }
+          <button
+            className="luxury-button"
+            onClick={props.onHomeClick}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              padding: 0,
             }}
-            onKeyPress={(e) => {
-              if (
-                e.key === 'Enter' &&
-                typeof props.onHomeClick === 'function'
-              ) {
-                props.onHomeClick();
-              }
-            }}
-            style={{ cursor: 'pointer' }}
           >
             <img
               src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
               alt="Ziad's Plants Logo"
+              style={{ marginRight: '10px' }}
             />
             <div>
-              <h3 style={{ color: 'white' }}>Ziad's Plants</h3>
-              <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
+              <h3 style={{ color: 'white', textAlign: 'left' }}>
+                Ziad's Plants
+              </h3>
+              <i
+                style={{ color: 'white', textAlign: 'left', display: 'block' }}
+              >
+                Where Green Meets Serenity
+              </i>
             </div>
-          </div>
+          </button>
         </div>
         <div style={styleObjUl}>
           <div>
