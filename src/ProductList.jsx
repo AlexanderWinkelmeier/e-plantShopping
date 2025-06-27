@@ -310,48 +310,25 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          {/* Simple button approach for better compatibility */}
-          <button
-            type="button"
-            onClick={() => {
-              // Mehrere Strategien, um zur Startseite zurückzukehren
-
-              // Strategie 1: Den direkten Callback verwenden
-              if (props.onHomeClick) {
-                props.onHomeClick();
+          {/* Hard-coded link approach for maximum compatibility */}
+          <a
+            href={
+              window.location.pathname.includes('/e-plantShopping/')
+                ? '/e-plantShopping/'
+                : '/'
+            }
+            onClick={(e) => {
+              // Standardverhalten verhindern und React-Callback nutzen auf lokalen Umgebungen
+              if (
+                window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1'
+              ) {
+                e.preventDefault();
+                if (props.onHomeClick) {
+                  props.onHomeClick();
+                }
               }
-
-              // Strategie 2: Direktes DOM-Scripting als Backup
-              setTimeout(() => {
-                // Zur Basis-URL navigieren ohne Neuladen
-                const baseUrl =
-                  window.location.protocol +
-                  '//' +
-                  window.location.host +
-                  (window.location.pathname.includes('/e-plantShopping/')
-                    ? '/e-plantShopping/'
-                    : '/');
-                window.history.pushState({}, '', baseUrl);
-
-                // App-Zustand direkt manipulieren
-                document
-                  .querySelectorAll('.product-list-container')
-                  .forEach((el) => {
-                    el.style.display = 'none';
-                  });
-
-                // Landing Page anzeigen
-                const landingPage = document.querySelector('.landing-page');
-                if (landingPage) {
-                  landingPage.style.display = 'block';
-                  landingPage.classList.remove('fade-out');
-                }
-
-                // Fallback, wenn alles andere fehlschlägt
-                if (!landingPage) {
-                  window.location.href = baseUrl;
-                }
-              }, 10); // Kurze Verzögerung für React-State
+              // Auf GitHub Pages lassen wir den Link sein normales Verhalten ausführen
             }}
             style={{
               background: 'transparent',
@@ -362,6 +339,7 @@ function ProductList(props) {
               padding: '5px',
               borderRadius: '5px',
               transition: 'background-color 0.3s',
+              textDecoration: 'none',
             }}
             className="home-button"
           >
@@ -376,7 +354,7 @@ function ProductList(props) {
                 Where Green Meets Serenity
               </i>
             </div>
-          </button>
+          </a>
         </div>
         <div style={styleObjUl}>
           <div>
