@@ -1,37 +1,21 @@
-// CartItem.jsx
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// GEÄNDERT: Payload für removeItem ist nur der Name des Items, nicht ein Objekt
-import { removeItem, updateQuantity } from './CartSlice';
+import { removeItem, updateQuantity, clearCart } from './CartSlice';
 import './CartItem.css';
 
-// HINWEIS: Diese Komponente stellt den gesamten Warenkorb dar, nicht nur ein einzelnes Item.
-// Ein besserer Name wäre vielleicht `ShoppingCart.jsx`.
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  // GEÄNDERT: Berechnung funktioniert jetzt direkt mit Zahlen
+  // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
-    // `item.cost` ist bereits eine Zahl, kein String
     return cart
       .reduce((total, item) => total + item.quantity * item.cost, 0)
       .toFixed(2);
   };
 
-  // GEÄNDERT: Berechnung funktioniert jetzt direkt mit Zahlen
-  const calculateTotalCost = (item) => {
-    // `item.cost` ist bereits eine Zahl
-    return (item.quantity * item.cost).toFixed(2);
-  };
-
   const handleContinueShopping = (e) => {
     onContinueShopping(e);
-  };
-
-  const handleCheckoutShopping = () => {
-    alert('Functionality to be added for future reference');
   };
 
   const handleIncrement = (item) => {
@@ -44,22 +28,38 @@ const CartItem = ({ onContinueShopping }) => {
         updateQuantity({ name: item.name, quantity: item.quantity - 1 })
       );
     } else {
-      // GEÄNDERT: Payload ist jetzt der Name (String), nicht das Objekt
-      dispatch(removeItem(item.name));
+      handleRemove(item);
     }
   };
 
   const handleRemove = (item) => {
-    // GEÄNDERT: Payload ist jetzt der Name (String), nicht das Objekt
+    console.log('Removing item:', item.name);
     dispatch(removeItem(item.name));
   };
 
-  // ... (der Rest deines Codes ab hier ist in Ordnung)
-  // ...
+  // Calculate total cost based on quantity for an item
+  const calculateTotalCost = (item) => {
+    return (item.quantity * item.cost).toFixed(2);
+  };
 
-  // Beispielhaft die korrigierte Render-Logik:
+  const handleCheckout = () => {
+    const total = calculateTotalAmount();
+    const confirmed = window.confirm(
+      `Would you like to complete your order for $${total}?`
+    );
+
+    if (confirmed) {
+      dispatch(clearCart());
+      alert(
+        'Thank you for your purchase! Your order has been successfully placed.'
+      );
+      onContinueShopping(new Event('dummy')); // Back to product list
+    }
+  };
+
   return (
     <div className="cart-container">
+      <h2 style={{ color: 'black' }}>Total Plants : {cart.length}</h2>
       <h2 style={{ color: 'black' }}>
         Total Cart Amount: ${calculateTotalAmount()}
       </h2>
@@ -69,9 +69,26 @@ const CartItem = ({ onContinueShopping }) => {
             <img className="cart-item-image" src={item.image} alt={item.name} />
             <div className="cart-item-details">
               <div className="cart-item-name">{item.name}</div>
-              {/* GEÄNDERT: Stellt sicher, dass der Preis korrekt formatiert wird */}
-              <div className="cart-item-cost">${item.cost.toFixed(2)}</div>
-              <div className="cart-item-quantity">{/* ... Buttons ... */}</div>
+              <div className="cart-item-cost">
+                ${Number(item.cost).toFixed(2)}
+              </div>
+              <div className="cart-item-quantity">
+                <button
+                  className="cart-item-button cart-item-button-dec"
+                  onClick={() => handleDecrement(item)}
+                >
+                  -
+                </button>
+                <span className="cart-item-quantity-value">
+                  {item.quantity}
+                </span>
+                <button
+                  className="cart-item-button cart-item-button-inc"
+                  onClick={() => handleIncrement(item)}
+                >
+                  +
+                </button>
+              </div>
               <div className="cart-item-total">
                 Total: ${calculateTotalCost(item)}
               </div>
@@ -85,7 +102,22 @@ const CartItem = ({ onContinueShopping }) => {
           </div>
         ))}
       </div>
-      {/* ... continue shopping buttons ... */}
+      <div
+        style={{ marginTop: '20px', color: 'black' }}
+        className="total_cart_amount"
+      ></div>
+      <div className="continue_shopping_btn">
+        <button
+          className="get-started-button"
+          onClick={(e) => handleContinueShopping(e)}
+        >
+          Continue Shopping
+        </button>
+        <br />
+        <button onClick={handleCheckout} className="get-started-button1">
+          Checkout
+        </button>
+      </div>
     </div>
   );
 };
