@@ -310,18 +310,50 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          {/* Einheitliche Lösung mit Hash-Navigation */}
+          {/* Robuste Hash-Navigation für GitHub Pages */}
           <a
-            href={
-              window.location.hostname === 'localhost' ||
-              window.location.hostname === '127.0.0.1'
-                ? '/'
-                : 'https://alexanderwinkelmeier.github.io/e-plantShopping/'
-            }
+            href="#"
             onClick={(e) => {
+              e.preventDefault();
+
+              // 1. Versuch: React Navigation Callback
               if (props.onHomeClick) {
-                e.preventDefault();
                 props.onHomeClick();
+                return;
+              }
+
+              // 2. Versuch: Hash manuell ändern - für GitHub Pages wichtig
+              if (window.location.hash === '#products') {
+                // Hash entfernen für Landing Page
+                window.history.pushState(
+                  null,
+                  '',
+                  window.location.pathname + window.location.search
+                );
+
+                // Manuell den Status in der UI aktualisieren, falls React-Navigation nicht greift
+                try {
+                  // DOM-Manipulation als letzte Option
+                  const landingPage = document.querySelector('.landing-page');
+                  const productPage = document.querySelector(
+                    '.product-list-container'
+                  );
+                  if (landingPage && productPage) {
+                    landingPage.style.display = 'block';
+                    productPage.style.display = 'none';
+                  }
+                } catch (e) {
+                  console.error('Konnte DOM nicht manipulieren:', e);
+                }
+              }
+
+              // 3. Letzte Option: Vollständiger Seitenneulad
+              if (!props.onHomeClick && window.location.hash === '#products') {
+                window.location.href =
+                  window.location.origin +
+                  (window.location.pathname.includes('/e-plantShopping/')
+                    ? '/e-plantShopping/'
+                    : '/');
               }
             }}
             style={{
