@@ -310,34 +310,54 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          <button
-            className="luxury-button"
-            onClick={props.onHomeClick}
+          <div
+            className="luxury"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                // Lösung 1: Direkt onHomeClick aufrufen
+                if (props.onHomeClick) {
+                  props.onHomeClick();
+                }
+
+                // Lösung 2: Direktes State-Management für den Fall, dass der Callback nicht funktioniert
+                const appContainer = document.querySelector('.app-container');
+                if (appContainer) {
+                  const landingPage =
+                    appContainer.querySelector('.landing-page');
+                  const productList = appContainer.querySelector(
+                    '.product-list-container'
+                  );
+
+                  if (landingPage && productList) {
+                    landingPage.classList.remove('fade-out');
+                    landingPage.style.display = 'block';
+                    productList.classList.remove('visible');
+                    window.scrollTo(0, 0);
+                  }
+                }
+              }
+            }}
             style={{
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              padding: 0,
+              cursor: 'pointer',
+              padding: '5px',
+              borderRadius: '5px',
+              transition: 'background-color 0.3s',
             }}
           >
             <img
               src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
               alt="Ziad's Plants Logo"
-              style={{ marginRight: '10px' }}
+              style={{ marginRight: '10px', height: '50px' }}
             />
             <div>
-              <h3 style={{ color: 'white', textAlign: 'left' }}>
-                Ziad's Plants
-              </h3>
-              <i
-                style={{ color: 'white', textAlign: 'left', display: 'block' }}
-              >
+              <h3 style={{ color: 'white', margin: 0 }}>Ziad's Plants</h3>
+              <i style={{ color: 'white', display: 'block' }}>
                 Where Green Meets Serenity
               </i>
             </div>
-          </button>
+          </div>
         </div>
         <div style={styleObjUl}>
           <div>

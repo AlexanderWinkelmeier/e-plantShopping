@@ -112,6 +112,17 @@ html, body {
 .luxury-button:focus {
   outline: none !important;
 }
+
+/* Neuer Stil für das Logo-Div */
+.luxury {
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.luxury:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
 /* LandingPage.css */
 @media screen and (max-width: 768px) {
   .content {
