@@ -310,24 +310,22 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          <div className="luxury">
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                props.onHomeClick(e);
-              }}
-              href="#"
-              style={{ cursor: 'pointer', textDecoration: 'none' }}
-            >
-              <img
-                src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
-                alt=""
-              />
-              <div>
-                <h3 style={{ color: 'white' }}>Ziad's Plants</h3>
-                <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
-              </div>
-            </a>
+          <div
+            className="luxury"
+            onClick={(e) => {
+              e.stopPropagation();
+              props.onHomeClick();
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            <img
+              src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
+              alt=""
+            />
+            <div>
+              <h3 style={{ color: 'white' }}>Ziad's Plants</h3>
+              <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
+            </div>
           </div>
         </div>
         <div style={styleObjUl}>
