@@ -36,7 +36,6 @@ body {
     color: white;
     font-size: 30px;
     text-decoration: none;
-   
 }
 
 /* Product Grid */
@@ -247,7 +246,7 @@ body {
       }
     
       .ul div {
-        text-align: center; /* Align text to the center */
+        text-align: center; 
       }
   }
 
