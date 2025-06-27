@@ -310,7 +310,7 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          {/* Lösung mit lokaler Entwicklungsunterstützung */}
+          {/* Einheitliche Lösung mit Hash-Navigation */}
           <a
             href={
               window.location.hostname === 'localhost' ||
@@ -318,6 +318,12 @@ function ProductList(props) {
                 ? '/'
                 : 'https://alexanderwinkelmeier.github.io/e-plantShopping/'
             }
+            onClick={(e) => {
+              if (props.onHomeClick) {
+                e.preventDefault();
+                props.onHomeClick();
+              }
+            }}
             style={{
               background: 'transparent',
               border: 'none',
