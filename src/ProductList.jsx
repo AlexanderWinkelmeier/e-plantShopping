@@ -311,7 +311,15 @@ function ProductList(props) {
       <div className="navbar" style={styleObj}>
         <div className="tag">
           <a
-            href="https://alexanderwinkelmeier.github.io/e-plantShopping/"
+            href={window.location.origin + (import.meta.env.BASE_URL || '/')}
+            onClick={(e) => {
+              // Wenn es props.onHomeClick gibt, nutzen wir React-Navigation
+              if (props.onHomeClick) {
+                e.preventDefault();
+                props.onHomeClick();
+              }
+              // Ansonsten greift der normale Link
+            }}
             style={{
               background: 'transparent',
               border: 'none',
