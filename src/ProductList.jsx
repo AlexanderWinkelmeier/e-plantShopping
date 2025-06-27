@@ -310,41 +310,21 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          <div
-            className="luxury"
-            onClick={() => {
-              if (typeof window !== 'undefined') {
-                // Lösung 1: Direkt onHomeClick aufrufen
-                if (props.onHomeClick) {
-                  props.onHomeClick();
-                }
-
-                // Lösung 2: Direktes State-Management für den Fall, dass der Callback nicht funktioniert
-                const appContainer = document.querySelector('.app-container');
-                if (appContainer) {
-                  const landingPage =
-                    appContainer.querySelector('.landing-page');
-                  const productList = appContainer.querySelector(
-                    '.product-list-container'
-                  );
-
-                  if (landingPage && productList) {
-                    landingPage.classList.remove('fade-out');
-                    landingPage.style.display = 'block';
-                    productList.classList.remove('visible');
-                    window.scrollTo(0, 0);
-                  }
-                }
-              }
-            }}
+          {/* Simple button approach for better compatibility */}
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
             style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              cursor: 'pointer',
               padding: '5px',
               borderRadius: '5px',
               transition: 'background-color 0.3s',
             }}
+            className="home-button"
           >
             <img
               src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
@@ -357,7 +337,7 @@ function ProductList(props) {
                 Where Green Meets Serenity
               </i>
             </div>
-          </div>
+          </button>
         </div>
         <div style={styleObjUl}>
           <div>
