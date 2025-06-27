@@ -312,15 +312,26 @@ function ProductList(props) {
         <div className="tag">
           <div
             className="luxury"
-            onClick={(e) => {
-              e.stopPropagation();
-              props.onHomeClick();
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              if (typeof props.onHomeClick === 'function') {
+                props.onHomeClick();
+              }
+            }}
+            onKeyPress={(e) => {
+              if (
+                e.key === 'Enter' &&
+                typeof props.onHomeClick === 'function'
+              ) {
+                props.onHomeClick();
+              }
             }}
             style={{ cursor: 'pointer' }}
           >
             <img
               src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png"
-              alt=""
+              alt="Ziad's Plants Logo"
             />
             <div>
               <h3 style={{ color: 'white' }}>Ziad's Plants</h3>

@@ -11,6 +11,7 @@ function App() {
   };
 
   const handleHomeClick = () => {
+    console.log('handleHomeClick wurde aufgerufen');
     setShowProductList(false);
     window.scrollTo(0, 0);
   };
