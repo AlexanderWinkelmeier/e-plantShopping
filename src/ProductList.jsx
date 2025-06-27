@@ -310,26 +310,8 @@ function ProductList(props) {
     <div>
       <div className="navbar" style={styleObj}>
         <div className="tag">
-          {/* Hard-coded link approach for maximum compatibility */}
           <a
-            href={
-              window.location.pathname.includes('/e-plantShopping/')
-                ? '/e-plantShopping/'
-                : '/'
-            }
-            onClick={(e) => {
-              // Standardverhalten verhindern und React-Callback nutzen auf lokalen Umgebungen
-              if (
-                window.location.hostname === 'localhost' ||
-                window.location.hostname === '127.0.0.1'
-              ) {
-                e.preventDefault();
-                if (props.onHomeClick) {
-                  props.onHomeClick();
-                }
-              }
-              // Auf GitHub Pages lassen wir den Link sein normales Verhalten ausführen
-            }}
+            href="https://alexanderwinkelmeier.github.io/e-plantShopping/"
             style={{
               background: 'transparent',
               border: 'none',
