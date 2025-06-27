@@ -1,3 +1,5 @@
+// ProductList.jsx
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem } from './CartSlice';
@@ -7,7 +9,6 @@ import CartItem from './CartItem';
 
 function ProductList({ onHomeClick }) {
   const [showCart, setShowCart] = useState(false);
-
   const [showPlants, setShowPlants] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
 
